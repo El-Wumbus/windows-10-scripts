@@ -23,27 +23,27 @@ function Exit-code
 }
 
 # Define an array of software to install with winget
-$pkgs=
-(
+$pkgs=(
   'vim.vim',
   'Microsoft.PowerToys',
   'Microsoft.WindowsTerminal',
   'Microsoft.VisualStudioCode',
-  'GnuWin32.Grep'
+  'GnuWin32.Grep',
+  'python'
 )
 
-# Define an array of software to install with MinGW
-$mingw_pkgs=
-(
+$adminless_pkgs=(
+  'Microsoft.VisualStudioCode'
+)
+
+$mingw_pkgs=(
   'gcc',
   'msys'
 )
 
-# Define an array of modules to install with Install-Modules
-$modules=
-(
-  'git',
-  'ps2exe'
+$ps_modules=(
+  'ps2exe',
+  'git'
 )
 
 function add_path 
@@ -76,7 +76,7 @@ function install_mingw
    # Run the executable
   .\tmp\mingw-installer.exe
   Start-Sleep 3
-  rmdir .\tmp\ -recurse
+  Remove-Item .\tmp\ -recurse
 }
 
 function install_chocolatey
@@ -89,48 +89,39 @@ function install_chocolatey
 
 function client_install 
 {
-  if ( $User_Installation )
+  if ($systemwide_installation)
   {
-    Write-Host "Skipping admin-only features"
+    ### feature Management ###
     
-    ### Manage Packages ###
-
-    # Loop through and install modules
-    Foreach( $module in $modules )
-    {
-      Write-Working
-      Write-Host "Installing $pkg"...""
-      Install-Module $module -Scope CurrentUser
-    }
-  }
-  elseif ( $Systemwide_Installation )
-  {
-    ### Manage Windows Features ###
-    
-    #Enable NFS
+    # Enable NFS
     Enable-WindowsOptionalFeature -FeatureName ServicesForNFS-ClientOnly,`
     ClientForNFS-Infrastructure -Online -NoRestart
-
-    ### Manage Packages ###
     
-    # Loop through and install winget packages
-    Foreach( $pkg in $pkgs )
+    ### Package Management ###
+    
+    # Install mingw
+    Write-Working
+    install_mingw
+
+    # Install Chocolatey
+    Write-Host
+    install_chocolatey
+
+    # Install winget packaget
+    Foreach($pkg in $pkgs)
     {
       Write-Working
       Write-Host "Installing" $pkg"..."
       winget install -e --id $pkg
     }
-
-    # Loop through and install modules
-    Foreach( $module in $modules )
+    
+    # Loop through powershell modules to install
+    Foreach($module in $ps_modules)
     {
       Write-Working
-      Write-Host "Installing $pkg"...""
-      Install-Module $module
+      Write-Host "Installing $module"
+      Install-Module -Name $module
     }
-    
-    # Install MinGW
-    install_mingw
     
     # Loop through mingw package list and install each package
     Foreach($mingw_pkg in $mingw_pkgs)
@@ -139,32 +130,40 @@ function client_install
       Write-Host "Installing" $mingw_pkg"..."
       mingw-get install $mingw_pkg
     }
-  } 
   }
-  else
+  elseif($user_installation)
   {
-    exit 1
+    Write-Host "Not enabling NFS on User installation."
+    
+    # Loop through powershell modules to install
+    Foreach($module in $ps_modules)
+    {
+      Write-Working
+      Write-Host "Installing Powershell module: $module"
+      Install-Module -Name -Scope CurrentUser $module
+    }
   }
-  # Add included binaries to path
-  add_path
+}
 
 function main 
 {
   $scope = Read-Host "User installation[user] or Systemwide installation[admin]?"
-  if ( $scope -eq 'user' -or $scope -eq 'u' )
+  
+  if ($scope -eq "user" -or $scope -eq "u")
   {
-    $User_Installation = $true
+    $user_installation = $True
   }
-  elseif ( $scope -eq 'admin' -or $scope -eq 'a' )
+  elseif ($scope -eq "admin" -or $scope -eq "a") 
   {
-    $Systemwide_Installation = $True
+    $systemwide_installation = $True 
   }
   else
   {
-    $User_Installation = $True
+    Write-Host "Inproper selection, exiting..."
+    exit 1
   }
 
-  $client = Read-Host "Start Client installation? y/n"
+  $client = Read-Host "Start installation? y/n"
   if ( $client -eq "y" -or $client -eq "yes" -or $client -eq "" )
   {
     client_install
@@ -188,5 +187,6 @@ function main
 Clear-Host
 Write-Host "Starting..."
 Write-Working
+
 main
 Exit-Code

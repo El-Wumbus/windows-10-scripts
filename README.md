@@ -6,17 +6,13 @@ Contact: https://discord.gg/8wBUFeGGYC (Discord)
 
 # Windows 10 Scripts
 
-*Shell scripts to make windows semi-useable*
+*Programs to make windows a little more useable*
 
-> Some powershell scripts are cross platform.
+> Some of the powershell scripts are cross platform.
 
-## Installation
+## Installation 
 
-```powershell
-git clone 'https://github.com/el-wumbus/windows-10-scripts'
-cd '.\windows-10-scripts\src\bin' # Use a forwardslash `/` for unix-like operating systems [Linux, MacOS, BSD, etc...]
-cp .\* [Any directory in $PATH] # Copy the files to somewhere in your $PATH or just run them from here
-```
+- Download latest release for your OS from the [releases page](https://github.com/El-Wumbus/windows-10-scripts/releases)
 
 ## Tools
 
@@ -29,6 +25,7 @@ cp .\* [Any directory in $PATH] # Copy the files to somewhere in your $PATH or j
 ```powershell
 Remove-Empty [Directory]
 ```
+
 example
 
 ```powershell
