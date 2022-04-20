@@ -30,66 +30,83 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE
 */
 
+#include <windows.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#define program_name "Echo-Input"
+#define program_name "Get-File"
 
 void usage(int status)
 {
-  if (status)
-  {
-    printf(("\
-ERROR:\n\
-Usage: %s [STRING]...\n"),
-           program_name);
-    exit(1);
-  }
-
-  else
-  {
-    printf(("\
-    Usage: %s [STRING]...\n"),
-           program_name);
-    exit(0);
-  }
+  printf(("\
+Exit Status: %d\n\
+Usage: %s [url] [output_file]\n"),
+         status, program_name);
+  exit(0);
 }
 
-// Declare the main function
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-  // Get options and show help\
-  using the usage function when\
-  the 'h' flag is used
-
-  int opt;
+    int opt;
   while ((opt = getopt(argc, argv, "h")) != -1)
   {
     switch (opt)
     {
     case 'h':
       usage(0);
+      return 0;
       break;
+    case '\?':
+      usage(1);
+      return 1;
+      break;  
     }
   }
-
   // If there's enough arguments
   if (argc > 1)
   {
-    // Loop through argv and print each argument
-    for (int i = 1; i < argc; i++)
+    char buffer[512];
+
+    HRESULT    dl;
+    
+    // A bunch of stupid windows things
+    typedef HRESULT (WINAPI * URLDownloadToFileA_t)
+    (LPUNKNOWN pCaller, LPCSTR szURL, LPCSTR szFileName, DWORD dwReserved, void * lpfnCB);
+    URLDownloadToFileA_t xURLDownloadToFileA;
+    xURLDownloadToFileA = (URLDownloadToFileA_t)GetProcAddress(LoadLibraryA("urlmon"), "URLDownloadToFileA");
+
+    dl = xURLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
+
+    sprintf( buffer, "Downloading File From: %s, To: %s", argv[1], argv[2]);
+    
+    if(dl == S_OK) 
     {
-      printf("%s ", argv[i]);
+        sprintf(buffer, "\
+File Successfully Downloaded To: %s\n", argv[2]);
+        printf(buffer);
+    } 
+    else if(dl == E_OUTOFMEMORY) 
+    {
+        sprintf(buffer, "\
+Failed To Download File.\n\
+Reason: Insufficient Memory\n");
+        printf(buffer);
+        return 0;
+    } 
+    else 
+    {
+        sprintf( buffer, "\
+Failed To Download File.\n\
+Reason: Unknown\n");
+        printf(buffer);
+        return 0;
     }
-    printf("\n");
-    return (0);
   }
 
   else
   {
-    // Print usage info if the number of arguments is too low
     usage(1);
-    return (1);
+    return(1);
   }
 }

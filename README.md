@@ -2,17 +2,17 @@
 Author: Aidan Neal <squidwardnose4507@gmail.com>
 Maintainer: Aidan Neal 
 Contact: https://discord.gg/8wBUFeGGYC (Discord)
+License: (MIT)
 -->
 
 # Windows 10 Scripts
 
-*Programs to make windows a little more useable*
+*CLI Programs to make windows a little more useable.*
 
-> Some of the powershell scripts are cross platform.
-
-## Installation 
+## Installation
 
 - Download latest release for your OS from the [releases page](https://github.com/El-Wumbus/windows-10-scripts/releases)
+- Add the installation directory [installdir\bin] to PATH. The defualt installdir is `C:\Program Files (x86)\Windows-10-scripts`. This means you'd add `C:\Program Files (x86)\Windows-10-scripts\bin` to your path. For more information on this see [add-a-directory-to-path-environment-variable-in-windows-10](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)
 
 ## Tools
 
@@ -24,7 +24,7 @@ Contact: https://discord.gg/8wBUFeGGYC (Discord)
 - `Measure-InternetSpeed` - Simplified speedtest written in python.
 - `Generate-Name` - Generate a random name.
 - `Echo-Input` - A recreation of echo for no particular reason.
-- `Download-File` - Like wget, it downloads a file using http/https.
+- `Get-File` - Like wget, but with way fewer features, it downloads a file using http/https.
 
 ## Usage
 

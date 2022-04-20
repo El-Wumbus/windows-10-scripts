@@ -42,7 +42,10 @@ void get_random_number(int seed_num, int rand_nums)
 
   // Loop and generate random numbers
   for (int i = 0; i < rand_nums; i++)
+  {
     printf(" %d ", rand());
+  }
+  printf("\n");
 }
 
 void get_random_number_interactive()
@@ -61,7 +64,10 @@ void get_random_number_interactive()
 
   // Loop and generate random numbers
   for (int i = 0; i < rand_nums; i++)
+  {
     printf(" %d ", rand());
+  }
+  printf("\n");
 }
 
 #endif

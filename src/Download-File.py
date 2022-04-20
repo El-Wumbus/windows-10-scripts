@@ -105,24 +105,22 @@ def download_simple():
 
 try:
     url = None
-    outputfile = None
+    output_path = None
     REPLACE = False
     VERBOSE = False
     TIMEOUT = 10
     PROGRESSBAR = True
     KIND = None
-    SIMPLE = False
     argv = sys.argv[1:]
     try:
-        opts, args = getopt(argv, "u:o:rhvt:pk:s", ["url =",
+        opts, args = getopt(argv, "u:o:rhvt:pk:", ["url =",
                                                     "output_path =",
                                                     "replace",
                                                     "help",
                                                     "verbose",
                                                     "timeout =",
                                                     "disable_progress_bar",
-                                                    "kind =",
-                                                    "simple"])
+                                                    "kind =",])
     except:
         throw("getopts error!")
         exit(1001)
@@ -161,8 +159,6 @@ try:
                 throw("argument for 'kind' cannot be empty")
                 exit(1004)
             KIND = arg
-        elif opt in ['-s', '--simple']:
-            SIMPLE = True
 except:
     throw("getopts error! [1001]")
     exit(1001)
@@ -174,21 +170,8 @@ def main():
     except:
         throw("getopts error! [1001]")
         exit(1001)
-    if not SIMPLE:
-        try:
-            download()
-        except:
-            throw("downloading failed! [1000]")
-            exit(1000)
-    else:
-        try:
-            download_simple()
-        except:
-            try:
-                download()
-            except:
-                throw("downloading failed! [1000]")
-                exit(1000)
+download()
+
 
 
 if __name__ == "__main__":
