@@ -1,2 +1,0 @@
-https://github.com/wixtoolset/wix3
-https://pypi.org/project/py2exe/

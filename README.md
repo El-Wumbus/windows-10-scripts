@@ -16,18 +16,16 @@ Contact: https://discord.gg/8wBUFeGGYC (Discord)
 
 ## Tools
 
-- `Remove-Empty` - Recursively delete empty directoriess.
+- `Remove-Empty` - Recursively delete empty directories.
+- `Hello-World` - Prints 'Hello World'.
+- `yes` - Just like the gnu tool, this program prints 'y' forever.
+- `Touch-File` - A windows alternative for the gnu program `touch`.
+- `Random-Number` - Print random numbers based on a seed that you provide.
+- `Measure-InternetSpeed` - Simplified speedtest written in python.
+- `Generate-Name` - Generate a random name.
+- `Echo-Input` - A recreation of echo for no particular reason.
+- `Download-File` - Like wget, it downloads a file using http/https.
 
 ## Usage
 
-### `Remove-Empty`
-
-```powershell
-Remove-Empty [Directory]
-```
-
-example
-
-```powershell
-Remove-Empty C:\Users
-```
+For help with usage, use the -h flag with most of the above commands.

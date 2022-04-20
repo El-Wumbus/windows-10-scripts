@@ -31,38 +31,27 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 */
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#define program_name "Echo-Input"
+#define program_name "Touch-File"
 
 void usage(int status)
 {
-  if (status)
-  {
-    printf(("\
-ERROR:\n\
-Usage: %s [STRING]...\n"),
-           program_name);
-    exit(1);
-  }
-
-  else
-  {
-    printf(("\
-    Usage: %s [STRING]...\n"),
-           program_name);
-    exit(0);
-  }
+  printf(("\
+Exit Status: %d\n\
+Usage: %s [filename]...\n"),
+         status, program_name);
+  exit(0);
 }
 
-// Declare the main function
+int makefile(const char *filename, const char *file_operation)
+{
+  fopen(filename, file_operation);
+}
+
 int main(int argc, char *argv[])
 {
-  // Get options and show help\
-  using the usage function when\
-  the 'h' flag is used
-
   int opt;
   while ((opt = getopt(argc, argv, "h")) != -1)
   {
@@ -70,17 +59,35 @@ int main(int argc, char *argv[])
     {
     case 'h':
       usage(0);
+      return 0;
       break;
+    case '\?':
+      usage(1);
+      return 1;
+      break;  
     }
   }
-
   // If there's enough arguments
   if (argc > 1)
   {
-    // Loop through argv and print each argument
+    // Loop through argv and make each file
     for (int i = 1; i < argc; i++)
     {
-      printf("%s ", argv[i]);
+      /* File pointer to hold reference to the file */
+      FILE *fPtr;
+      fPtr = fopen(argv[i], "w");
+      if (fPtr == NULL)
+      {
+        // File not created, return 1 (failure)
+        printf("unable to create file '%s'\n", argv[i]);
+        return (1);
+      }
+
+      else
+      {
+        printf("created file '%s'\n", argv[i]);
+      }
+      fclose(fPtr);
     }
     return (0);
   }

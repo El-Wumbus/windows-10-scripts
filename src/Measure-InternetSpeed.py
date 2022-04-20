@@ -3,6 +3,7 @@
 # Maintainer: Aidan Neal
 # Contact: https://discord.gg/8wBUFeGGYC (Discord)
 # Target platform(s): Windows, Linux, MacOS
+# License: (MIT)
 
 """ The MIT License (MIT) <https://mit-license.org/>
 Copyright © 2022 Aidan Neal

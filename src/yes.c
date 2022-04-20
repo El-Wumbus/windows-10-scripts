@@ -2,7 +2,8 @@
 Author: Aidan Neal <squidwardnose4507@gmail.com>\
 Maintainer: Aidan Neal \
 Contact: https://discord.gg/8wBUFeGGYC (Discord) \
-Target platform(s): Windows
+Target platform(s): Windows\
+License: (MIT)
 
 /* The MIT License (MIT) <https://mit-license.org/>
 Copyright © 2022 Aidan Neal
@@ -49,7 +50,7 @@ Usage: %s\n"),
   else
   {
     printf(("\
-    Usage: %s\n"),
+Usage: %s\n"),
            program_name);
     exit(0);
   }
