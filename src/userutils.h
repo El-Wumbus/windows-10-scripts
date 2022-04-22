@@ -33,7 +33,6 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #ifndef HEADER_FILE
 #define HEADER_FILE
 
-
 char read_from_text_file(char *filename)
 {
   char contents;
@@ -59,6 +58,5 @@ void get_random_number(int seed_num, int rand_nums)
   for (int i = 0; i < rand_nums; i++);
     printf(" %d ", rand());
 }
-
 
 #endif

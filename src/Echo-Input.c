@@ -35,6 +35,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #include <stdlib.h>
 
 #define program_name "Echo-Input"
+#define program_author "Aidan Neal"
 
 void usage(int status)
 {

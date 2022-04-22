@@ -1,12 +1,16 @@
 #!/usr/bin/env pwsh
 
 $c_code = (
-  'Write-Yes',
+  'yes',
   'Touch-File',
   'Random-Number',
   'Hello-World',
   'Echo-Input',
   'Get-File'
+)
+
+$cpp_code = (
+  'which'
 )
 
 $python_code = (
@@ -40,6 +44,13 @@ Foreach($script in $powershell_scripts)
   Write-Host "Compiling ${script}..."
   ps2exe -inputFile .\${script}.ps1 -outputFile ..\bin\bin\${script}.exe -title ${script}
   Write-Host "${script} compiled!"
+}
+
+Foreach($program in $cpp_code)
+{
+  Write-Host "Compiling ${program}..."
+  gcc ${program}.c -lstdc++ -o ..\bin\bin\${program}.exe
+  Write-Host "${program} Compiled!"
 }
 
 Remove-Item .\build -recurse

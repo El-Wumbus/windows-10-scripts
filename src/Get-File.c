@@ -36,6 +36,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #include <unistd.h>
 
 #define program_name "Get-File"
+#define program_author "Aidan Neal"
 
 void usage(int status)
 {
@@ -48,7 +49,7 @@ Usage: %s [url] [output_file]\n"),
 
 int main(int argc, char **argv)
 {
-    int opt;
+  int opt;
   while ((opt = getopt(argc, argv, "h")) != -1)
   {
     switch (opt)
@@ -60,7 +61,7 @@ int main(int argc, char **argv)
     case '\?':
       usage(1);
       return 1;
-      break;  
+      break;
     }
   }
   // If there's enough arguments
@@ -68,45 +69,45 @@ int main(int argc, char **argv)
   {
     char buffer[512];
 
-    HRESULT    dl;
-    
+    HRESULT dl;
+
     // A bunch of stupid windows things
-    typedef HRESULT (WINAPI * URLDownloadToFileA_t)
-    (LPUNKNOWN pCaller, LPCSTR szURL, LPCSTR szFileName, DWORD dwReserved, void * lpfnCB);
+    typedef HRESULT(WINAPI * URLDownloadToFileA_t)(LPUNKNOWN pCaller, LPCSTR szURL, LPCSTR szFileName, DWORD dwReserved, void *lpfnCB);
     URLDownloadToFileA_t xURLDownloadToFileA;
     xURLDownloadToFileA = (URLDownloadToFileA_t)GetProcAddress(LoadLibraryA("urlmon"), "URLDownloadToFileA");
 
     dl = xURLDownloadToFileA(NULL, argv[1], argv[2], 0, NULL);
 
-    sprintf( buffer, "Downloading File From: %s, To: %s", argv[1], argv[2]);
-    
-    if(dl == S_OK) 
+    sprintf(buffer, "Downloading File From: %s, To: %s", argv[1], argv[2]);
+
+    if (dl == S_OK)
     {
-        sprintf(buffer, "\
-File Successfully Downloaded To: %s\n", argv[2]);
-        printf(buffer);
-    } 
-    else if(dl == E_OUTOFMEMORY) 
+      sprintf(buffer, "\
+File Successfully Downloaded To: %s\n",
+              argv[2]);
+      printf(buffer);
+    }
+    else if (dl == E_OUTOFMEMORY)
     {
-        sprintf(buffer, "\
+      sprintf(buffer, "\
 Failed To Download File.\n\
 Reason: Insufficient Memory\n");
-        printf(buffer);
-        return 0;
-    } 
-    else 
+      printf(buffer);
+      return 0;
+    }
+    else
     {
-        sprintf( buffer, "\
+      sprintf(buffer, "\
 Failed To Download File.\n\
 Reason: Unknown\n");
-        printf(buffer);
-        return 0;
+      printf(buffer);
+      return 0;
     }
   }
 
   else
   {
     usage(1);
-    return(1);
+    return (1);
   }
 }

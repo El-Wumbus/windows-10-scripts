@@ -1,11 +1,11 @@
-#!/usr/bin/env pwsh
-# Author: Aidan Neal <squidwardnose4507@gmail.com>
-# Maintainer: Aidan Neal 
-# Contact: https://discord.gg/8wBUFeGGYC (Discord)
-# Target platform(s): Windows, Linux, MacOS
-#License: (MIT)
+//\
+Author: Aidan Neal <squidwardnose4507@gmail.com>\
+Maintainer: Aidan Neal \
+Contact: https://discord.gg/8wBUFeGGYC (Discord) \
+Target platform(s): Windows\
+License: (MIT)
 
-<# The MIT License (MIT) <https://mit-license.org/>
+/* The MIT License (MIT) <https://mit-license.org/>
 Copyright © 2022 Aidan Neal
 
 Permission is hereby granted, free of charge,
@@ -28,47 +28,21 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE
-#>
+*/
 
-param (
-  [Parameter(Mandatory=$true,
-  ValueFromPipeline=$true)]
-  [string]
-  $target_directory
-)
+#ifndef HEADER_FILE
+#define HEADER_FILE
 
-function Exit-code
+#include <stdlib.h>
+
+void get_random_number(int seed_num, int rand_nums)
 {
-  if ( $? )
-  {
-    Throw "`nProgram exited with code: $? [1]`n"
-  }
-  else
-  {
-    Write-Host "`nProgram exited with code: $? [0]`n"
-    
-  }
-}
+  //seed rand()
+  srand(seed_num);
 
-function Remove-Empty
-{
-  do
-  {
-    $dirs = Get-ChildItem $target_directory -directory -recurse | Where-Object { (Get-ChildItem $_.fullName).count -eq 0 } | Select-Object -expandproperty FullName
-    $dirs | Foreach-Object { Remove-Item $_ }
-  }
-  while ($dirs.count -gt 0) 
-  Exit-Code
-  
-  return "Complete"
+  // Loop and generate random numbers
+  for (int i = 0; i < rand_nums; i++);
+    int out = rand();
+    cout << out;
 }
-
-
-if ( Test-Path -Path $target_directory )
-{
-  Remove-Empty
-}
-else
-{
-  throw "Cannot find the suppiled path, did you enter it correctly?"
-}
+#endif

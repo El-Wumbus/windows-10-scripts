@@ -34,6 +34,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE*/
 #include <stdlib.h>
 
 #define program_name "Hello-World"
+#define program_author "Aidan Neal"
 
 void usage(int status)
 {

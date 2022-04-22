@@ -35,6 +35,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #include <unistd.h>
 
 #define program_name "yes"
+#define program_author "Aidan Neal"
 
 void usage(int status)
 {
@@ -66,6 +67,10 @@ void main(int argc, char *argv[])
     case 'h':
       usage(0);
       break;
+    case '?': // Any flag other than -h displays the usage
+      usage(1);
+      return 1;
+      break; 
     }
   }
 

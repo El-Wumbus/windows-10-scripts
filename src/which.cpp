@@ -30,73 +30,54 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE
 */
 
-#include <stdio.h>
+#include <iostream>
+#include <Windows.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#define program_name "Touch-File"
+#define program_name "which"
 #define program_author "Aidan Neal"
 
 void usage(int status)
 {
   printf(("\
 Exit Status: %d\n\
-Usage: %s [filename]...\n"),
+Usage: %s [program-name]...\n"),
          status, program_name);
   exit(0);
 }
 
-int makefile(const char *filename, const char *file_operation)
-{
-  fopen(filename, file_operation);
-}
-
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
   int opt;
   while ((opt = getopt(argc, argv, "h")) != -1)
   {
     switch (opt)
     {
-    case 'h':
+    case 'h': // Display usage information.
       usage(0);
       return 0;
       break;
-    case '\?':
+    case '\?': // If option doesn't exist, display usage information.
       usage(1);
       return 1;
-      break;  
+      break;
     }
   }
-  // If there's enough arguments
-  if (argc > 1)
+
+  char requested_path[MAX_PATH];
+`
+  if (argc != 2)
   {
-    // Loop through argv and make each file
-    for (int i = 1; i < argc; i++)
-    {
-      /* File pointer to hold reference to the file */
-      FILE *fPtr;
-      fPtr = fopen(argv[i], "w");
-      if (fPtr == NULL)
-      {
-        // File not created, return 1 (failure)
-        printf("unable to create file '%s'\n", argv[i]);
-        return (1);
-      }
-
-      else
-      {
-        printf("created file '%s'\n", argv[i]);
-      }
-      fclose(fPtr);
-    }
-    return (0);
+    cin.get(requested_path, MAX_PATH);
   }
-
   else
   {
-    // Print usage info if the number of arguments is too low
-    usage(1);
-    return (1);
+    requested_path = argv[2]
   }
+
+  wchar_t buffer[MAX_PATH];
+  GetModuleFileName(requested_path, buffer, MAX_PATH);
+  cout << ":: "
+  cout << buffer;
 }

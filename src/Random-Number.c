@@ -36,6 +36,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #include "userutils.h"
 
 #define program_name "Random-Number"
+#define program_author "Aidan Neal"
 
 
 void usage(int status)
@@ -56,7 +57,7 @@ numbers to generate."),
 
 void ERR(char error_message)
 {
-  printf("Error:%s\n", error_message);
+  printf("Error:%s\n", (char)error_message);
   usage(1);
   printf("Exiting...");
   exit(1);
@@ -78,7 +79,7 @@ void get_random_number_interactive()
 
   // Loop and generate random numbers
   for (int i = 0; i < rand_nums; i++)
-    printf(" %d ", rand());
+    printf("%d\n", rand());
 }
 
 int main(int argc, char *argv[])
