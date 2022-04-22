@@ -32,8 +32,23 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 
 #ifndef HEADER_FILE
 #define HEADER_FILE
-#include <stdio.h>
-#include <stdlib.h>
+
+
+char read_from_text_file(char *filename)
+{
+  char contents;
+  FILE *fPtr;
+  fPtr = fopen(filename, "r");
+
+  if (fPtr == NULL)
+  {
+    printf("couldn't open file!");
+    exit(1);
+  }
+
+  fscanf(fPtr, "%s", &contents);
+  return ("%s", contents);
+}
 
 void get_random_number(int seed_num, int rand_nums)
 {
@@ -41,33 +56,9 @@ void get_random_number(int seed_num, int rand_nums)
   srand(seed_num);
 
   // Loop and generate random numbers
-  for (int i = 0; i < rand_nums; i++)
-  {
+  for (int i = 0; i < rand_nums; i++);
     printf(" %d ", rand());
-  }
-  printf("\n");
 }
 
-void get_random_number_interactive()
-{
-  int seed_num;
-  int rand_nums;
-
-  // Read seed and ammount of numbers
-  printf("Enter a seed value:");
-  scanf("%d", &seed_num);
-  printf("How many numbers?:");
-  scanf("%d", &rand_nums);
-
-  // Seed rand()
-  srand(seed_num);
-
-  // Loop and generate random numbers
-  for (int i = 0; i < rand_nums; i++)
-  {
-    printf(" %d ", rand());
-  }
-  printf("\n");
-}
 
 #endif

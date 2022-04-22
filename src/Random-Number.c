@@ -33,9 +33,10 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "randnum.h"
+#include "userutils.h"
 
 #define program_name "Random-Number"
+
 
 void usage(int status)
 {
@@ -51,6 +52,33 @@ number generator.\n The second is the number of random\
 numbers to generate."),
          status, program_name, program_name);
   exit(status);
+}
+
+void ERR(char error_message)
+{
+  printf("Error:%s\n", error_message);
+  usage(1);
+  printf("Exiting...");
+  exit(1);
+}
+
+void get_random_number_interactive()
+{
+  int seed_num;
+  int rand_nums;
+
+  // Read seed and ammount of numbers
+  printf("Enter a seed value:");
+  scanf("%d", &seed_num);
+  printf("How many numbers?:");
+  scanf("%d", &rand_nums);
+
+  // Seed rand()
+  srand(seed_num);
+
+  // Loop and generate random numbers
+  for (int i = 0; i < rand_nums; i++)
+    printf(" %d ", rand());
 }
 
 int main(int argc, char *argv[])
