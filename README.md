@@ -63,7 +63,7 @@ sha512: `47c3988fe04098fd623fe58168151d3c9cf80bc52d40ba758721290a66e8c43e2e79c00
 
 - `Remove-Empty` - Recursively delete empty directories.
 - `Hello-World` - Prints 'Hello World'.
-- `yes` - Just like the gnu tool, this program prints 'y' forever.
+- `yes` - This program prints 'y' forever.
 - `Touch-File` - A windows alternative for the gnu program `touch`.
 - `Random-Number` - Print random numbers based on a seed that you provide.
 - `Measure-InternetSpeed` - Simplified speedtest written in python.
