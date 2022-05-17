@@ -11,7 +11,8 @@ License: (MIT)
 
 ## Development
 
-*This repository is licensed under the [MIT](https://mit-license.org/) license.*
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+
 
 ### How to contribute
 
